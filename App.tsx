@@ -16,6 +16,9 @@ const App = () => {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <View style={styles.container}>
         <Text style={styles.text}>Welcome Native!</Text>
+        <Text style={styles.second}>
+          I am testing this app right now lets see what happens
+        </Text>
       </View>
     </SafeAreaProvider>
   );
@@ -31,6 +34,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
     color: 'black',
+  },
+  second: {
+    textAlign: 'center',
+    fontSize: 32,
+    fontWeight: 800,
+    color: 'green',
   },
 });
 
