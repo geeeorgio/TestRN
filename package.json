@@ -3,15 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "eslint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
   },
   "dependencies": {
+    "@react-native/new-app-screen": "0.81.0",
     "react": "19.1.0",
     "react-native": "0.81.0",
-    "@react-native/new-app-screen": "0.81.0",
     "react-native-safe-area-context": "^5.5.2"
   },
   "devDependencies": {
@@ -26,16 +30,18 @@
     "@react-native/metro-config": "0.81.0",
     "@react-native/typescript-config": "0.81.0",
     "@types/react": "^19.1.0",
-    "eslint": "^8.19.0",
-    "prettier": "^3.0.2",
-    "typescript": "^5.8.3",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
-"eslint-config-prettier": "^10.0.1",
-"eslint-import-resolver-typescript": "^3.7.0",
-"eslint-plugin-import": "^2.31.0",
-"eslint-plugin-prettier": "^5.2.3",
-"eslint-plugin-react-hooks": "^5.1.0",
-"babel-plugin-module-resolver": "^5.0.2"
+    "babel-plugin-module-resolver": "^5.0.2",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.1.5",
+    "prettier": "^3.0.2",
+    "typescript": "^5.8.3"
   },
   "engines": {
     "node": ">=18"
