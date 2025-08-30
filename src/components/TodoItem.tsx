@@ -1,27 +1,64 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
+import TodoEdit from './TodoEdit';
 
 import type { Todo } from 'src/types/todos';
 
 interface TodoProps {
   todo: Todo;
-  deleteTodo: (id: string) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string, newText: string) => void;
+  onToggle: (id: string) => void;
 }
 
-const TodoItem: React.FC<TodoProps> = ({ todo, deleteTodo }) => {
+const TodoItem = ({ todo, onDelete, onEdit, onToggle }: TodoProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  if (isEditing)
+    return <TodoEdit onCancel={handleCancel} onEdit={onEdit} todo={todo} />;
+
   return (
     <View style={styles.item}>
-      <Text style={styles.itemText}>{todo.text}</Text>
-      <Pressable
-        onPress={() => deleteTodo(todo.id)}
-        style={({ pressed }) =>
-          pressed
-            ? { ...styles.deleteBtn, ...styles.btnPressed }
-            : styles.deleteBtn
-        }
-      >
-        <Text style={styles.deleteText}>Delete</Text>
-      </Pressable>
+      <TouchableOpacity onPress={() => onToggle(todo.id)}>
+        <Text
+          style={[styles.itemText, todo?.isCompleted && styles.todoCompleted]}
+        >
+          {todo.text}
+        </Text>
+      </TouchableOpacity>
+      <View style={styles.buttons}>
+        <Pressable
+          onPress={() => setIsEditing(true)}
+          disabled={todo.isCompleted && true}
+          style={({ pressed }) => [
+            styles.editBtn,
+            todo.isCompleted && styles.editDisabled,
+            pressed && styles.editPressed,
+          ]}
+        >
+          <Text style={styles.text}>Edit</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => onDelete(todo.id)}
+          style={({ pressed }) => [
+            styles.deleteBtn,
+            pressed && styles.btnPressed,
+          ]}
+        >
+          <Text style={styles.text}>Delete</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -38,7 +75,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#444',
     borderRadius: 6,
   },
-  itemText: { color: 'white', fontSize: 16 },
+  itemText: { color: 'white', fontSize: 22, fontWeight: 'bold' },
+  todoCompleted: {
+    textDecorationLine: 'line-through',
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    gap: 10,
+  },
   deleteBtn: {
     backgroundColor: '#d11414ff',
     paddingVertical: 8,
@@ -48,5 +94,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnPressed: { backgroundColor: 'rgba(255, 43, 43, 0.6)' },
-  deleteText: { color: 'white', fontWeight: 'bold' },
+  text: { color: 'white', fontWeight: 'bold' },
+  editBtn: {
+    backgroundColor: '#2343f8ff',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  editPressed: { backgroundColor: 'rgba(49, 135, 255, 0.6)' },
+  editDisabled: { backgroundColor: 'rgba(128, 174, 255, 0.6)' },
 });

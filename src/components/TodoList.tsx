@@ -7,16 +7,23 @@ import type { Todo } from 'src/types/todos';
 
 interface TodoListProps {
   todoList: Todo[];
-  deleteTodo: (id: string) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string, newText: string) => void;
+  onToggle: (id: string) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ todoList, deleteTodo }) => {
+const TodoList = ({ todoList, onDelete, onEdit, onToggle }: TodoListProps) => {
   return (
     <View style={styles.container}>
-      <FlatList
+      <FlatList<Todo>
         data={todoList}
         renderItem={({ item }) => (
-          <TodoItem todo={item} deleteTodo={deleteTodo} />
+          <TodoItem
+            todo={item}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            onToggle={onToggle}
+          />
         )}
         keyExtractor={(item) => item.id}
       />
@@ -27,7 +34,5 @@ const TodoList: React.FC<TodoListProps> = ({ todoList, deleteTodo }) => {
 export default TodoList;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'olive',
-  },
+  container: {},
 });

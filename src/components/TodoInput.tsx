@@ -5,12 +5,12 @@ interface TodoInputProps {
   addTodo: (text: string) => void;
 }
 
-const TodoInput: React.FC<TodoInputProps> = ({ addTodo }) => {
+const TodoInput = ({ addTodo }: TodoInputProps) => {
   const [text, setText] = useState('');
 
   const handleAddTodo = () => {
     if (!text.trim()) return;
-    console.log('text', text);
+
     addTodo(text.trim());
     setText('');
   };
@@ -26,9 +26,7 @@ const TodoInput: React.FC<TodoInputProps> = ({ addTodo }) => {
       />
       <Pressable
         onPress={handleAddTodo}
-        style={({ pressed }) =>
-          pressed ? { ...styles.addBtn, ...styles.btnPressed } : styles.addBtn
-        }
+        style={({ pressed }) => [styles.addBtn, pressed && styles.btnPressed]}
       >
         <Text style={styles.text}>Add</Text>
       </Pressable>
@@ -50,6 +48,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     color: 'white',
+    fontSize: 22,
   },
   addBtn: {
     backgroundColor: 'blue',
