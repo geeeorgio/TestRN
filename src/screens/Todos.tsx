@@ -1,11 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 
-import TodoInput from 'src/components/TodoInput';
-import TodoList from 'src/components/TodoList';
+import TodoInput from 'src/components/Todo/TodoInput';
+import TodoList from 'src/components/Todo/TodoList';
 import type { Todo } from 'src/types/todos';
 
 const Todos = () => {
+  const navigation = useNavigation();
+
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const addTodos = (text: string) => {
@@ -37,7 +40,7 @@ const Todos = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Things to do</Text>
+      <Button title="Go back" onPress={() => navigation.goBack()} />
       <TodoInput addTodo={addTodos} />
       <TodoList
         todoList={todos}
@@ -55,11 +58,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 20,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+    backgroundColor: '#333333',
+    padding: 10,
   },
 });

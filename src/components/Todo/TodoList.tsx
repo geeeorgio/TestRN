@@ -34,5 +34,7 @@ const TodoList = ({ todoList, onDelete, onEdit, onToggle }: TodoListProps) => {
 export default TodoList;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+  },
 });
