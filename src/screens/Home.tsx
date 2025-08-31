@@ -11,6 +11,14 @@ const Home = () => {
     <View style={styles.container}>
       <Text style={styles.text}>Home</Text>
       <Button onPress={() => navigation.navigate('Todos')} title="Todo App" />
+      <Button
+        onPress={() => navigation.navigate('BottomTabNavigator')}
+        title="BottomTab"
+      />
+      <Button
+        onPress={() => navigation.navigate('DrawerNavigatior')}
+        title="Drawer"
+      />
     </View>
   );
 };
