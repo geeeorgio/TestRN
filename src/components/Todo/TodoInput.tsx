@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
-interface TodoInputProps {
-  addTodo: (text: string) => void;
-}
+import { addTodo } from 'src/store/slices/appSlice/slice';
 
-const TodoInput = ({ addTodo }: TodoInputProps) => {
+const TodoInput = () => {
+  const dispatch = useDispatch();
   const [text, setText] = useState('');
 
   const handleAddTodo = () => {
     if (!text.trim()) return;
 
-    addTodo(text.trim());
+    dispatch(addTodo(text.trim()));
     setText('');
   };
 

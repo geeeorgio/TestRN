@@ -6,31 +6,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import TodoEdit from './TodoEdit';
 
+import { deleteTodo, toggleTodo } from 'src/store/slices/appSlice/slice';
 import type { Todo } from 'src/types/todos';
 
 interface TodoProps {
   todo: Todo;
-  onDelete: (id: string) => void;
-  onEdit: (id: string, newText: string) => void;
-  onToggle: (id: string) => void;
 }
 
-const TodoItem = ({ todo, onDelete, onEdit, onToggle }: TodoProps) => {
+const TodoItem = ({ todo }: TodoProps) => {
+  const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
 
   const handleCancel = () => {
     setIsEditing(false);
   };
 
-  if (isEditing)
-    return <TodoEdit onCancel={handleCancel} onEdit={onEdit} todo={todo} />;
+  if (isEditing) return <TodoEdit onCancel={handleCancel} todo={todo} />;
 
   return (
     <View style={styles.item}>
-      <TouchableOpacity onPress={() => onToggle(todo.id)}>
+      <TouchableOpacity onPress={() => dispatch(toggleTodo(todo.id))}>
         <Text
           style={[styles.itemText, todo?.isCompleted && styles.todoCompleted]}
         >
@@ -50,7 +49,7 @@ const TodoItem = ({ todo, onDelete, onEdit, onToggle }: TodoProps) => {
           <Text style={styles.text}>Edit</Text>
         </Pressable>
         <Pressable
-          onPress={() => onDelete(todo.id)}
+          onPress={() => dispatch(deleteTodo(todo.id))}
           style={({ pressed }) => [
             styles.deleteBtn,
             pressed && styles.btnPressed,

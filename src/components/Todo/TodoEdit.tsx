@@ -6,21 +6,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 
+import { updateTodo } from 'src/store/slices/appSlice/slice';
 import type { Todo } from 'src/types/todos';
 
 interface TodoEditProps {
   onCancel: () => void;
-  onEdit: (id: string, newText: string) => void;
   todo: Todo;
 }
 
-const TodoEdit = ({ onCancel, onEdit, todo }: TodoEditProps) => {
+const TodoEdit = ({ onCancel, todo }: TodoEditProps) => {
+  const dispatch = useDispatch();
   const [text, setText] = useState(todo?.text);
 
   const handleSave = () => {
     if (text.trim()) {
-      onEdit(todo.id, text.trim());
+      dispatch(updateTodo({ id: todo.id, text: text.trim() }));
     }
 
     onCancel();
